@@ -98,7 +98,7 @@
                      if (nkid == "") {
                          nkid = 11;
                      }
-                     this.backend.postRequest(`/getdatafromnikd2008/${nkid}`).subscribe(res => {
+                     this.backend.getRequest(`/getdatafromnikd2008/${nkid}`).subscribe(res => {
                          let result = res
   
                          if (result.length > 0) {
