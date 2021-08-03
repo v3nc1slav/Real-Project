@@ -1,0 +1,78 @@
+<system-modal size="large">
+    <system-modal-header >
+        <system-modal-header-right></system-modal-header-right>
+    </system-modal-header>
+    <system-modal-content  margin="none" #modalContent style="overflow: unset;">
+        <div class="slds-card">
+            <div class="slds-page-header slds-grid">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                    <div class="slds-media__body">
+                        <h1 class="slds-card__header-title" style="justify-content: center;">
+                            <p class="slds-card__header-link slds-truncate">
+                                <span>
+                                    <h4>ПОЛЕТА ЗА РЕДАКЦИЯ</h4>
+                                </span>
+                            </p>
+                        </h1>
+                    </div>
+                </header>
+            </div> 
+        </div>
+        <div class="ng-star-inserted">
+            <div class="slds-grid slds-wrap ng-star-inserted">
+                <div class="slds-size--1-of-2 ng-star-inserted">
+                   <div class="ng-star-inserted">
+                       <div class="slds-p-around--xx-small">
+                            <div class="ng-star-inserted">
+                                <div class="ng-star-inserted" >
+                                    <div class="ng-star-inserted">
+                                        <div style="display: flow-root">
+                                            <label class="slds-truncate slds-float_left slds-form-element__label" style="padding: 0px;">Статус на клиент </label>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form-element__control ng-star-inserted">
+                                        <div class="slds-grid slds-m-vertical--xx-small">
+                                            <div class="slds-form-element slds-p-right--x-small slds-size--2-of-4 ng-star-inserted">
+                                                <div class="slds-form-element__control ng-star-inserted">
+                                                    <div class="slds-select_container">
+                                                        <select class="slds-select ng-untouched ng-pristine ng-valid" #statusValue (change)="statusChanged(statusValue.value)" >
+                                                            <option value=" " class="ng-star-inserted"> </option>
+                                                            <option value="active" class="ng-star-inserted">Active</option>
+                                                            <option value="inactive" class="ng-star-inserted">Inactive</option>
+                                                            <option value="for_assign" class="ng-star-inserted">For assign</option>
+                                                            <option value="temporaty_stopped" class="ng-star-inserted">Temporaty stopped</option>
+                                                            <option value="done" class="ng-star-inserted">Done</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                       </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </system-modal-content>
+    <system-modal-footer>
+        <!-- <footer class="slds-modal__footer"> -->
+            <div class="slds-grid slds-grid--vertical-align-center slds-grid--align-redht">
+               <div class="slds-col">
+                    <div containerclass="slds-button-group-row">
+                        <div role="group" class="slds-button-group-row">
+                            <button class="slds-button slds-button_neutral ng-star-inserted"  (click)="closed()">
+                                Отказ
+                          </button>
+                          <button class="slds-button slds-button_neutral slds-button--brand ng-star-inserted" (click)="save()">
+                                Запиши
+                          </button>
+ 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-- </footer> -->
+    </system-modal-footer>
+</system-modal>
