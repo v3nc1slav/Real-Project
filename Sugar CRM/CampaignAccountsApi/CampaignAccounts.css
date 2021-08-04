@@ -1,0 +1,82 @@
+.tableHolder {
+    overflow-y: scroll;
+    padding-top: 0 !important;
+    box-sizing:border-box;
+    width: 100%;
+    position:absolute;
+    left:0px;
+    top: 20px;
+    bottom:0px;
+    padding: 10px;
+    overflow: initial;
+    display: inline-grid;
+}
+.reportTable {
+      position: relative;
+      border-collapse: collapse; 
+    width: 100%;
+    height: auto;
+    overflow-y: auto;
+    display: block;
+    background: white;
+    overflow: initial;
+}
+.reportTable td {
+    border: 1px solid #555555;
+    height: 28px;
+    padding: 4px 8px;
+    text-overflow: ellipsis;
+    text-align: center;
+}
+.reportTable th {
+    border: 1px solid #555555;
+    color: #76777a;
+    font-size: 11px;
+    font-weight: normal;
+    height: 28px;
+    padding: 4px 8px;
+    font-weight: bold;
+    font-size: 12px;
+    text-align: center;
+}
+.btn.hide-button{
+    display:none;
+}
+.btn.hide-button.show-button{
+    display:inline-block;
+    margin-left: 0px;
+}
+.button-container{
+    float: right;
+    clear: right;
+}
+.order{
+    cursor:pointer;
+    position:relative;
+}
+.order:after{
+    position:absolute;
+    content:'⇅';
+    top:50%;
+    right:10px;
+    width:20px;
+    height:20px;
+    margin-top: -10px;
+    font-size: 15px;
+}
+.window-shadow{
+    position:absolute;
+    background:#000;
+    opacity:0.3;
+    z-index:999;
+    width:100%;
+    height:100%;
+    display:none;
+}
+.window-shadow.active{
+    display:block;
+}
+#head_table{
+    position: sticky;
+      top: 0; /* Don't forget this, required for the stickiness */
+}

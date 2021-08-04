@@ -1,0 +1,856 @@
+<div class="container" style="width:100%; height:95%;">
+<div class="btn-toolbar pull-right dropdown" style="margin-right:20px;">
+	<span id="return_button" onclick="addContactButtonHandler()" class="btn btn-primary">Добави Kомпания</span>
+			<span id="return_button" onclick="returnToCampaign()" class="btn btn-primary">Обратно Към Кампанията</span>
+              {{#each meta.buttons}} 
+                {{field ../this}}
+            {{/each}}
+</div>
+ 
+<div class="window-shadow"></div>
+ 
+<div class="tableHolder" style=" margin-top: 20px;">
+ 
+	<table  class="reportTable" style=" margin-left: 18%;margin-right:18%;height:auto;width: auto;">
+<thead style="display: table; width: 100%;">
+  <tr>
+    <th style="width: 10%;"> Брой на компаниите асоциирани с кампанията</th>
+    <th style="width: 9%;"> Брой компании без проведено обаждане</th>
+    <th style="width: 9%;"> Брой компании с проведено обаждане</th>
+    <th style="width: 9%;"> Брой компании без проведена среща</th>
+    <th style="width: 9%;"> Брой компании с проведена среща</th>
+    <th style="width: 27%;"  colspan="4">Брой на компании в отделните категории на резултат от обаждания</th>
+    <th style="width: 27%;"  colspan="4">Брой на компании в отделните категории на резултат от срещи</th>
+  </tr>
+</thead>
+<tbody style="display: table; width: 100%;">
+  <tr>
+    <td rowspan="2" style="width: 10%;" id="total_count">-</td>
+    <td rowspan="2" style="width: 9%;" id="total_count_no_call">-</td>
+    <td rowspan="2" style="width: 9%;" id="total_conducted_count_no_call">-</td>
+    <td rowspan="2" style="width: 9%;" id="total_count_no_meeting">-</td>
+    <td rowspan="2" style="width: 9%;" id="total_conducted_count_no_meeting">-</td>
+    <td style="width: 9%;">Нищо не е направено</td>
+    <td style="width: 6%;">Да</td>
+    <td style="width: 6%;">Не</td>
+    <td style="width: 6%;">Друго</td>
+    <td style="width: 9%;">Нищо не е направено</td>
+    <td style="width: 6%;">Да</td>
+    <td style="width: 6%;">Не</td>
+    <td style="width: 6%;">Друго</td>
+ 
+  </tr>
+  <tr>
+    <td style="width: 9%;"id="camapign_resul_count1">-</td>
+    <td style="width: 6%;"id="camapign_resul_count3">-</td>
+    <td style="width: 6%;"id="camapign_resul_count4">-</td>
+    <td style="width: 6%;"id="camapign_resul_count2">-</td>
+    <td style="width: 9%;"id="camapign_resul_m_count1">-</td>
+    <td style="width: 6%;"id="camapign_resul_m_count3">-</td>
+    <td style="width: 6%;"id="camapign_resul_m_count4">-</td>
+    <td style="width: 6%;"id="camapign_resul_m_count2">-</td>
+  </tr>
+</tbody>
+</table>
+ 
+	<center>
+ 
+		<h1><b>Списък с компании</b></h1>
+		</center>
+	<table style="display: inline-table; text-align: center; margin-bottom: 20px; ">
+		<tr><th></th>		
+			<th>Организация:</th>
+            <th>Отговорник:</th>
+            <th>Резултат от среща:</th>
+            <th>Резултат от обаждане:</th>
+            <th>Отговорни центрове:</th>
+            <th>Брой обажданя:</th>
+            <th>Брой срещи:</th>
+		<tr>
+			<td>
+				<span id="show_all_button" class="btn  btn-primary hide-button">Покажи всички</span>
+				<span id="show_selected_button" class="btn  btn-primary hide-button">Покажи избраните</span>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<b>Филтри: </b>
+			</td>
+			<td style="width: 10%;"><div id="accountField" style="width: 100%;"></div></td>
+			<td style="width: 10%;"><div id="assignedUser" style="width: 100%;"></div></td>
+            <td><select id="filter_results_m" style="margin:0">
+            <option value="0">-----</option>
+            <option value="1">Нищо не е направено</option>
+            <option value="3">Да</option>
+            <option value="2">Друго</option>
+            <option value="4">Не</option>
+       		 </select>
+            <td><select id="filter_results" style="margin:0">
+            <option value="0">-----</option>
+            <option value="1">Нищо не е направено</option>
+            <option value="3">Да</option>
+            <option value="2">Друго</option>
+            <option value="4">Не</option>
+       		 </select>
+				</td>
+                <td>
+                    <select id="filter_teams" style="margin:0">
+ 
+       		 </select>
+				</td>
+			<td><input type="text" id="filter_calls" value="" /></td>
+			<td><input type="text" id="filter_meetings" value="" /></td>
+			<td>
+				<input type="button" class="btn btn-primary" onclick="searchClicked()" value="Филтрирай" id="filter-btn">
+				<input type="button" class="btn" value="Изчисти" onclick="clearClicked()" id="filter-btn-clear">
+			</td>
+		</tr>
+	</table>
+	<div id="tranfer_container" style="width: 20%;" class="button-container">
+      	<div id="transferAssignedUser" style="margin-bottom: 5px;width: 100%;"></div>
+		<span id="cancel_button" class="btn btn-primary" style="margin: 0 0 10px;">Откажи</span>
+		<span id="save_button" class="btn btn-primary" style="margin: 0 0 10px;" onclick="transferClicked()" data-action="save_button">Актуализирай</span>
+	</div>
+ 
+	<table class="reportTable" style="height:68%;">
+		<tbody id="wallets_result" style="display: table; width: 99.5%;">
+			<tr id="head_table" >
+                <th style="width: 3%;"><input type="checkbox" name="selectAll" id="cb-select-all" onclick="selectAllClicked(this)"></th>
+				<th style="width: 6%;cursor: pointer;" onclick="sortByAccName()"{{!--class="order"--}} id="lname_order"><span style="margin:0px 3px;">Име</span></th>
+                <th style="width: 6%;cursor: pointer;" onclick="sortByAssignedUserName()" {{!--class="order"--}} id="lname_order"><span style="margin:0px 3px;">Отговорник</span></th>
+				<th style="width: 6%;cursor: pointer;" onclick="sortByCallsNumber()"{{!--class="order"--}}><span style="margin:0px 3px;">Брой обаждания</span></th>
+				<th style="width: 6%;cursor: pointer;" onclick="sortByMeetingNumber()"{{!--class="order"--}}><span style="margin:0px 3px;">Брой срещи</span></th>
+				<th style="width: 6%;" {{!--class="order"--}}><span style="margin:0px 3px;">Последно изпратено на:</span></th>
+				<th style="width: 6%;" {{!--class="order"--}}><span style="margin:0px 3px;">Последно проведено обаждане</span></th>
+				<th style="width: 6%;" {{!--class="order"--}}><span style="margin:0px 3px;">Следващо планирано обаждане</span></th>
+				<th style="width: 6%;" {{!--class="order"--}}><span style="margin:0px 3px;">Последна проведена среща</span></th>
+				<th style="width: 6%;" {{!--class="order"--}}><span style="margin:0px 3px;">Следващa планиранa среща</span></th>
+				<th style="width: 6%;" {{!--class="order"--}}><span style="margin:0px 3px;">Резултат от среща</span></th>
+				<th style="width: 6%;" {{!--class="order"--}}><span style="margin:0px 3px;">Коментар от среща</span></th>
+				<th style="width: 6%;" {{!--class="order"--}}><span style="margin:0px 3px;">Резултат от обаждане</span></th>
+				<th style="width: 6%;" {{!--class="order"--}}><span style="margin:0px 3px;">Коментар от обаждане</span></th>
+                <th style="width: 6%;cursor: pointer;" onclick="sortByDateAdded()"{{!--class="order"--}}><span style="margin:0px 3px;">Добавено на</span></th>
+				<th style="width: 6%;" {{!--class="order"--}} colspan="5"><span style="margin:0px 0px;">Действия</span></th>		
+			</tr>
+		</tbody>
+	</table>
+</div>
+</div>
+<script>
+var LOADING_MESSAGE_ID = "loading_show";
+var campaignId = window.location.href.split("&campaignId=")[1];
+var campaignName = window.location.href.split("campaignName=")[1].split("&")[0]
+ 
+campaignName =decodeURI( campaignName);
+var selectAllState = false;
+var isFiltered = false;
+var lastFilter = "";
+var results = [];
+var teams = [{id: "", name: "-----"}];
+var my_teams = App.user.attributes.my_teams;
+var payload_teams = [];
+for(var i = 0; i < my_teams.length; i++){
+    payload_teams.push(my_teams[i].id.toString());
+}
+//determine if the user should be able to transfer assigned users
+if ($.inArray("Кампании - генериране и реасайнване на портфейли",App.user.attributes.roles) == 0 || App.user.attributes.type == "admin"){
+ 
+}
+var payloadString = JSON.stringify( payload_teams);
+payloadString =payloadString.replace('[','').replace(']','');
+App.api.call("get", App.api.buildURL("Campaigns/get-teams?OAuth-Token=" + App.api.getOAuthToken() + "&campaignId=" + campaignId), {}, {
+        success: function (result) {
+            for(var i = 0;i < result.length; i++){
+                teams.push(result[i]);
+            }
+ 
+            for(var i = 0;i < teams.length; i++){
+               $('#filter_teams').append('<option value="'+teams[i].id+'">'+teams[i].name+'</option>')
+            }
+             App.alert.dismiss(LOADING_MESSAGE_ID);
+            getDataAndDrawHTML();
+        },
+        error: function (data) {
+            App.alert.dismiss(LOADING_MESSAGE_ID);
+            alert("api error: " + JSON.stringify(data));
+        }
+    }, { async: false });
+ 
+ 
+function getDataAndDrawHTML(filters){
+	App.alert.show(LOADING_MESSAGE_ID, {
+    level: "process",
+    messages: "Please wait.",
+    autoClose: false
+	});
+	if(filters){
+		callApiAndGetResults(filters);
+        updateStats(filters);
+	}else{
+		callApiAndGetResults();
+         updateStats();
+	}
+ 
+}
+function updateStats(filters){
+    if(filters){
+        callCountAllApi(filters);
+		callCountNoCallApi(filters);
+		meetingCount(filters);
+		callCountByResultApi(1,filters);
+		callCountByResultApi(2,filters);
+		callCountByResultApi(3,filters);
+        callCountByResultApi(4,filters);
+		callCountByMeetingResultApi(1,filters);
+		callCountByMeetingResultApi(2,filters);
+		callCountByMeetingResultApi(3,filters);
+        callCountByMeetingResultApi(4,filters);
+    }else{
+ 
+		callCountAllApi();
+		callCountNoCallApi();
+		meetingCount();
+		callCountByResultApi(1);
+		callCountByResultApi(2);
+		callCountByResultApi(3);
+        callCountByResultApi(4);
+		callCountByMeetingResultApi(1);
+		callCountByMeetingResultApi(2);
+		callCountByMeetingResultApi(3);
+        callCountByMeetingResultApi(4);
+    }
+}
+ 
+function addContactButtonHandler(){
+	App.api.call("get", App.api.buildURL("Campaigns/get-prospect-list-id?OAuth-Token=" + App.api.getOAuthToken() + "&campaignId=" + campaignId), {}, {
+        success: function (result) {
+			prospectListDrawerHandler(result.list);
+            App.alert.dismiss(LOADING_MESSAGE_ID);
+        },
+        error: function (data) {
+            App.alert.dismiss(LOADING_MESSAGE_ID);
+            alert("api error: " + JSON.stringify(data));
+        }
+    }, { async: false });
+}
+function prospectListDrawerHandler(prospectListId){
+	var _model, success;
+        _model = App.data.createBean("ProspectLists", { id: prospectListId });
+        success = _.bind(function(model) {
+            model.module = "ProspectLists";
+            App.drawer.open({
+                layout: "record",
+                context: {
+                    id: prospectListId,
+                    model: _model,
+                    module: "ProspectLists",
+                    drawerCall: true
+                }
+            }, _.bind(function(context, var1) {
+                setTimeout(function() {
+                   prospectListOnDrawerCloseHandler();
+                }, 200);
+            }, this));
+        }, this);
+        _model.fetch({
+            showAlerts: true,
+            success: success,
+            params: {
+                erased_fields: true
+            }
+        });
+}
+ 
+function prospectListOnDrawerCloseHandler(){
+       App.alert.show(LOADING_MESSAGE_ID, {
+            level: "process",
+            messages: "Please wait.",
+            autoClose: false
+        });
+	  App.api.call("get",App.api.buildURL("Campaigns/create-wallets-companies?OAuth-Token=" + App.api.getOAuthToken() + "&campaignId=" + campaignId),{},{
+                success: function (result) {
+ 
+                    if(result.walletCount >0){
+                        getDataAndDrawHTML();
+                    }
+                },
+                error: function (data) {
+ 
+                }
+            },{async: false});
+}
+ 
+function returnToCampaign(){
+	App.router.redirect("#bwc/index.php?module=Campaigns&offset=1&return_module=Campaigns&action=DetailView&record=" + campaignId);
+}
+ 
+var addedASC = true;
+function sortByDateAdded(){
+     results.sort(function(a,b){
+        var aDate = a.created_on;
+        var bDate = b.created_on;
+        var partsA = aDate.split("-");
+        var adt = new Date(parseInt(partsA[2], 10),
+                  parseInt(partsA[1], 10) - 1,
+                  parseInt(partsA[0], 10));
+        var partsB = bDate.split("-");
+        var bdt = new Date(parseInt(partsB[2], 10),
+                  parseInt(partsB[1], 10) - 1,
+                  parseInt(partsB[0], 10));
+        if(adt< bdt){
+           if(addedASC){ return -1;}
+           else {return 1}
+        }
+        if(adt > bdt){
+            if(addedASC){ return 1;}
+           else {return -1}
+        }
+        return 0;
+    });
+    addedASC = !addedASC;
+    drawHTMLtable();
+}
+ 
+var callsASC = true;
+function sortByCallsNumber(){
+   results.sort(function(a,b){
+        var aCall = parseInt(a.call_number);
+        var bCall = parseInt(b.call_number);
+ 
+        if(aCall< bCall){
+           if(callsASC){ return -1;}
+           else {return 1}
+        }
+        if(aCall > bCall){
+            if(callsASC){ return 1;}
+           else {return -1}
+        }
+        return 0;
+    });
+    callsASC = !callsASC;
+    drawHTMLtable();
+}
+var meetingASC = true;
+function sortByMeetingNumber(){
+   results.sort(function(a,b){
+        var aMeeting = parseInt(a.meeting_number);
+        var bMeeting = parseInt(b.meeting_number);
+ 
+        if(aMeeting< bMeeting){
+           if(meetingASC){ return -1;}
+           else {return 1}
+        }
+        if(aMeeting > bMeeting){
+            if(meetingASC){ return 1;}
+           else {return -1}
+        }
+        return 0;
+    });
+    meetingASC = !meetingASC;
+    drawHTMLtable();
+}
+var usrASC = true;
+function sortByAssignedUserName(){
+   results.sort(function(a,b){
+        var aUser = a.u_name;
+        var bUser = b.u_name;
+        if(a.u_name == null){
+            aUser = '-';
+        }
+        if(b.u_name == null){
+            bUser = '-';
+        }
+        if(aUser.toUpperCase()< bUser.toUpperCase()){
+           if(usrASC){ return -1;}
+           else {return 1}
+        }
+        if(aUser.toUpperCase() > bUser.toUpperCase()){
+            if(usrASC){ return 1;}
+           else {return -1}
+        }
+        return 0;
+    });
+    usrASC = !usrASC;
+    drawHTMLtable();
+}
+var accASC = true;
+function sortByAccName(){
+   results.sort(function(a,b){
+        var aAcc = a.accName;
+        var bAcc = b.accName;
+        if(a.accName == null){
+            aAcc = '-';
+        }
+        if(b.accName == null){
+            bAcc = '-';
+        }
+        if(aAcc < bAcc){
+            if(accASC){ return -1;}
+           else {return 1}
+        }
+        if(aAcc > bAcc){
+            if(accASC){ return 1;}
+           else {return -1}
+        }
+        return 0;
+    });
+    accASC = !accASC;
+    drawHTMLtable();
+}
+var lastNameASC = true;
+function sortByLastName(){
+   results.sort(function(a,b){
+        var aFirst = a.first_name;
+        var bFirst = b.first_name;
+        var aLast = a.last_name;
+        var bLast = b.last_name;
+        if(a.first_name == null){
+           aFirst = '-';
+        }
+        if(b.first_name == null){
+           bFirst = '-';
+        }
+        if(a.last_name == null){
+            aLast = '-';
+        }
+        if(b.last_name == null){
+            bLast = '-';
+        }
+        if(aLast<bLast){
+             if(lastNameASC){ return -1;}
+           else {return 1}
+        }
+        if(aLast>bLast){
+            if(lastNameASC){ return 1;}
+            else {return -1}
+        }
+          if(aFirst< bFirst){
+           if(lastNameASC){ return -1;}
+           else {return 1}
+        }
+        if(aFirst > bFirst){
+            if(lastNameASC){ return 1;}
+           else {return -1}
+        }
+        return 0;
+    });
+    lastNameASC = !lastNameASC;
+    drawHTMLtable();
+}
+var firstNameASC = true;
+function sortByFirstName(){
+   results.sort(function(a,b){
+        var aFirst = a.first_name;
+        var bFirst = b.first_name;
+        var aLast = a.last_name;
+        var bLast = b.last_name;
+        if(a.first_name == null){
+           aFirst = '-';
+        }
+        if(b.first_name == null){
+           bFirst = '-';
+        }
+        if(a.last_name == null){
+            aLast = '-';
+        }
+        if(b.last_name == null){
+            bLast = '-';
+        }
+        if(aFirst< bFirst){
+           if(firstNameASC){ return -1;}
+           else {return 1}
+        }
+        if(aFirst > bFirst){
+            if(firstNameASC){ return 1;}
+           else {return -1}
+        }
+        if(aLast<bLast){
+             if(firstNameASC){ return -1;}
+           else {return 1}
+        }
+        if(aLast>bLast){
+            if(firstNameASC){ return 1;}
+            else {return -1}
+        }
+        return 0;
+    });
+    firstNameASC = !firstNameASC;
+    drawHTMLtable();
+}
+function transferClicked() {
+    var assigned = $("[name='transfer_assigned_user_filter']").val();
+    if (!assigned && assigned.length == 0) {
+        alert("Моля изберете отговорник.")
+        return;
+    }
+    var inputs = { transferTo: assigned, wallets: [] };
+    if ($("#cb-select-all").prop("checked")) {
+		//todo select all for dynamic loading
+		if ($("input:checked").length == 0) {
+            alert("Моля изберете портфейли.");
+            return;
+        }
+        $("input:checked").each(function(i) {
+            inputs.wallets.push($(this).attr("id").split("cb-select-")[1]);
+        });
+ 
+        App.alert.show(LOADING_MESSAGE_ID, {
+            level: "process",
+            messages: "Please wait.",
+            autoClose: false
+        });
+        callTransferApi(inputs, function() {
+            for (var i = 0; i < inputs.wallets.length; i++) {
+                getWallet(inputs.wallets[i], function(result) {
+                    editTableRow(result);
+                });
+            }
+        });
+    } else {
+        if ($("input:checked").length == 0) {
+            alert("Моля изберете портфейли.");
+            return;
+        }
+        $("input:checked").each(function(i) {
+            inputs.wallets.push($(this).attr("id").split("cb-select-")[1]);
+        });
+        App.alert.show(LOADING_MESSAGE_ID, {
+            level: "process",
+            messages: "Please wait.",
+            autoClose: false
+        });
+        callTransferApi(inputs, function() {
+            for (var i = 0; i < inputs.wallets.length; i++) {
+                getWallet(inputs.wallets[i], function(result) {
+                    editTableRow(result);
+                });
+            }
+        });
+    }
+}
+function editTableRow(result) {
+    if(isFiltered){
+        updateStats(lastFilter);
+    }else{
+        updateStats();
+    }
+    var walletId = result['wallet_id'];
+	$(`#uname-${walletId}`).empty();
+    $(`#uname-${walletId}`).html(result.u_name);
+    $(`#acc-${walletId}`).empty();
+    $(`#acc-${walletId}`).html(`<a href="${"#Accounts/" + result.accId}">${result.accName}</a>`);
+    $(`#calls-${walletId}`).empty();
+    $(`#calls-${walletId}`).html(result.call_number);
+    $(`#meeting-${walletId}`).empty();
+    $(`#meeting-${walletId}`).html(result.meeting_number);
+    $(`#lcall-${walletId}`).empty();
+    $(`#lcall-${walletId}`).html(`${result.last_date ? `${result.last_date}` : "-"}`);
+    $(`#hcall-${walletId}`).empty();
+    $(`#hcall-${walletId}`).html(`${result.held_call_id ? `<a href="${"#Calls/" + result.held_call_id}">${result.held_call_name}</a>` : "-"}`);
+    $(`#pcall-${walletId}`).empty();
+    $(`#pcall-${walletId}`).html(`${result.planned_call_id ? `<a href="${"#Calls/" + result.planned_call_id}">${result.planned_call_name}` : "-"}`);
+    $(`#hmeeting-${walletId}`).empty();
+    $(`#hmeeting-${walletId}`).html(`${result.held_meeting_id ? `<a href="${"#Meetings/" + result.held_meeting_id}">${result.held_meeting_name}</a>` : "-"}`);
+    $(`#pmeeting-${walletId}`).empty();
+    $(`#pmeeting-${walletId}`).html(`${result.planned_meeting_id ? `<a href="${"#Meetings/" + result.planned_meeting_id}">${result.planned_meeting_name}` : "-"}`);
+    $(`#result-${walletId}`).empty();
+    $(`#result-${walletId}`).html(`${serializeCampaignResult(result.wallet_result)}`);
+    $(`#mresult-${walletId}`).empty();
+    $(`#mresult-${walletId}`).html(`${serializeCampaignResult(result.meet_res)}`);
+    $(`#desc-${walletId}`).empty();
+    $(`#desc-${walletId}`).html(`${result.wallet_description ? `${result.wallet_description.length > 20 ? result.wallet_description.substring(0,20) + "..." : result.wallet_description }` : "-"}`);
+    $(`#mdesc-${walletId}`).empty();
+    $(`#mdesc-${walletId}`).html(`${result.meet_desc ? `${result.meet_desc.length > 20 ? result.meet_desc.substring(0,20) + "..." : result.meet_desc }` : "-"}`);
+}
+function getWallet(walletId, callback) {
+    App.alert.show(LOADING_MESSAGE_ID, {
+    level: "process",
+    messages: "Please wait.",
+    autoClose: false
+	});
+    App.api.call("get", App.api.buildURL("Campaigns/get-wallet-accounts?OAuth-Token=" + App.api.getOAuthToken() + "&campaignId=" + campaignId + "&walletId=" + walletId), {}, {
+        success: function (result) {
+            callback(result);
+            App.alert.dismiss(LOADING_MESSAGE_ID);
+        },
+        error: function (data) {
+            App.alert.dismiss(LOADING_MESSAGE_ID);
+            alert("api error: " + JSON.stringify(data));
+        }
+    }, { async: false });
+}
+function callTransferApi(inputs, callback) {
+    App.api.call("create", App.api.buildURL("Campaigns/transfer-assigned-user?OAuth-Token=" + App.api.getOAuthToken()), { inputs }, {
+        success: function (result) {
+			console.log(result);
+            callback();
+            App.alert.dismiss(LOADING_MESSAGE_ID);
+        },
+        error: function (data) {
+            App.alert.dismiss(LOADING_MESSAGE_ID);
+            alert("api error: " + JSON.stringify(data));
+        }
+    }, { async: false });
+}
+function selectAllClicked(e) {
+    selectAllState = e.checked; 
+    $(".custom-cb-flag").each(function (i) {
+        this.checked = selectAllState;
+    })
+}
+function clearClicked() {
+    $("#filter_first_name").val('');
+    $("#filter_last_name").val('');
+    $(".select2-search-choice-close").click();
+    $("#filter_results").val('0');
+    $("#filter_results_m").val('0');
+    $("#filter_calls").val('');
+    $("#filter_meetings").val('');
+    $("#filter_teams").val('');
+ 
+    if (isFiltered) {
+        isFiltered = false;
+        lastFilter = "";
+        getDataAndDrawHTML();
+    }
+}
+ 
+function serializeCampaignResult(result) {
+    if (result == 1) {
+        return "Нищо не е направено";
+    } else if (result == 2) {
+        return "Друго";
+    } else if (result == 3) {
+        return "Да";
+    } else if (result == 4) {
+        return "Не";
+    } else {
+        return "-"
+    }
+}
+function searchClicked() {
+    var filters = "";
+    var assigned = $("[name='assigned_user_filter']").val();
+    if (assigned && assigned.length != 0) {
+        isFiltered = true;
+        filters += `&user_id=${assigned}`
+    }
+	var acc = $("[name='account_filter']").val();
+	if (acc && acc.length != 0) {
+        isFiltered = true;
+        filters += `&acc_id=${acc}`
+    }
+    if ($("#filter_results").val() != 0) {
+        isFiltered = true;
+        filters += `&results=${$("#filter_results").val()}`
+    }
+    if ($("#filter_results_m").val() != 0) {
+        isFiltered = true;
+        filters += `&resultsm=${$("#filter_results_m").val()}`
+    }
+    if ($("#filter_calls").val()) {
+        isFiltered = true;
+        filters += `&call_number=${$("#filter_calls").val()}`
+    }
+    if ($("#filter_meetings").val()) {
+        isFiltered = true;
+        filters += `&meeting_number=${$("#filter_meetings").val()}`
+    }
+ 
+     if ($("#filter_teams").val() != "") {
+        isFiltered = true;
+        filters += `&team_id=${$("#filter_teams").val()}`
+    }
+    lastFilter = filters;
+	getDataAndDrawHTML(filters);
+}
+var currentTotalCount =0;
+function callCountAllApi(filters) {
+	var url;
+	if(filters){
+		url = App.api.buildURL("Campaigns/get-wallets-count-accounts?OAuth-Token=" + App.api.getOAuthToken() + "&campaignId=" + campaignId + filters)
+	}else{
+		url = App.api.buildURL("Campaigns/get-wallets-count-accounts?OAuth-Token=" + App.api.getOAuthToken() + "&campaignId=" + campaignId)
+	}
+    App.api.call("get",url , {teams:payloadString}, {
+        success: function (result) {
+            currentTotalCount = result.call_count;
+            $("#total_count").html(result.call_count);
+            //alert(result.call_count);
+             App.alert.dismiss(LOADING_MESSAGE_ID);
+ 
+        },
+        error: function (data) {
+            App.alert.dismiss(LOADING_MESSAGE_ID);
+            alert("api error: " + JSON.stringify(data));
+        }
+    }, { async: false });
+}
+function callCountNoCallApi(filters) {
+	var url;
+	if(filters){
+		url =  App.api.buildURL("Campaigns/get-wallets-count-without-call-accounts?OAuth-Token=" + App.api.getOAuthToken() + "&campaignId=" + campaignId + filters)
+	}else{
+		url =  App.api.buildURL("Campaigns/get-wallets-count-without-call-accounts?OAuth-Token=" + App.api.getOAuthToken() + "&campaignId=" + campaignId)
+	}
+    App.api.call("get",url, {}, {
+        success: function (result) {
+            $("#total_count_no_call").html(result.call_count);
+            $("#total_conducted_count_no_call").html(parseInt(currentTotalCount) - parseInt(result.call_count));
+            //alert(result.call_count);
+             App.alert.dismiss(LOADING_MESSAGE_ID);
+        },
+        error: function (data) {
+            App.alert.dismiss(LOADING_MESSAGE_ID);
+            alert("api error: " + JSON.stringify(data));
+        }
+    }, { async: false });
+}
+function meetingCount(filters) {
+	var url;
+	if(filters){
+		url =  App.api.buildURL("Campaigns/get-wallets-count-without-meeting-accounts?OAuth-Token=" + App.api.getOAuthToken() + "&campaignId=" + campaignId + filters)
+	}else{
+		url =  App.api.buildURL("Campaigns/get-wallets-count-without-meeting-accounts?OAuth-Token=" + App.api.getOAuthToken() + "&campaignId=" + campaignId)
+	}
+    App.api.call("get",url, {}, {
+        success: function (result) {
+            $("#total_count_no_meeting").html(result.meeting_count);
+            $("#total_conducted_count_no_meeting").html(parseInt(currentTotalCount) - parseInt(result.meeting_count));
+            //alert(result.call_count);
+             App.alert.dismiss(LOADING_MESSAGE_ID);
+        },
+        error: function (data) {
+            App.alert.dismiss(LOADING_MESSAGE_ID);
+            alert("api error: " + JSON.stringify(data));
+        }
+    }, { async: false });
+}
+function callCountByResultApi(target,filters) {
+	var url;
+	if(filters){
+		url = App.api.buildURL("Campaigns/get-wallets-count-by-result-accounts?OAuth-Token=" + App.api.getOAuthToken() + "&campaignId=" + campaignId + "&result=" + target + filters)
+	}else{	
+		url = App.api.buildURL("Campaigns/get-wallets-count-by-result-accounts?OAuth-Token=" + App.api.getOAuthToken() + "&campaignId=" + campaignId + "&result=" + target);
+	}
+    App.api.call("get",url , {teams:payloadString}, {
+        success: function (result) {
+            $(`#camapign_resul_count${target}`).html(result.call_count);
+            //alert(result.call_count);
+             App.alert.dismiss(LOADING_MESSAGE_ID);
+        },
+        error: function (data) {
+            App.alert.dismiss(LOADING_MESSAGE_ID);
+            alert("api error: " + JSON.stringify(data));
+        }
+    }, { async: false });
+}
+function callCountByMeetingResultApi(target,filters) {
+	var url;
+	if(filters){
+		url = App.api.buildURL("Campaigns/get-wallets-count-by-result-m-accounts?OAuth-Token=" + App.api.getOAuthToken() + "&campaignId=" + campaignId + "&result=" + target + filters)
+	}else{	
+		url = App.api.buildURL("Campaigns/get-wallets-count-by-result-m-accounts?OAuth-Token=" + App.api.getOAuthToken() + "&campaignId=" + campaignId + "&result=" + target);
+	}
+    App.api.call("get",url , {teams:payloadString}, {
+        success: function (result) {
+            $(`#camapign_resul_m_count${target}`).html(result.call_count);
+            //alert(result.call_count);
+             App.alert.dismiss(LOADING_MESSAGE_ID);
+        },
+        error: function (data) {
+            App.alert.dismiss(LOADING_MESSAGE_ID);
+            alert("api error: " + JSON.stringify(data));
+        }
+    }, { async: false });
+}
+function drawHTMLtable(){
+    $(".custom-tr-flag").remove();
+            for (var i = 0; i < results.length; i++) {
+                //results.push(result[i]);
+                var accountHTML = "";
+                if(results[i].accId == null){
+                    accountHTML = `<td id="acc-${results[i].wallet_id}">-</td>`
+                }else{
+                    accountHTML = `<td id="acc-${results[i].wallet_id}"><a href="${"#Accounts/" + results[i].accId}">${results[i].accName}</a></td>`
+                }
+                $("#wallets_result").append(`
+            <tr class="custom-tr-flag">
+                <td><input class="custom-cb-flag" type="checkbox" id="cb-select-${results[i].wallet_id}" ${selectAllState ? "checked" : ""}></td>
+ 
+                 ${accountHTML}
+                <td id="uname-${results[i].wallet_id}">${results[i].u_name}</td>
+                <td id="calls-${results[i].wallet_id}">${results[i].call_number}</td>
+                <td id="meeting-${results[i].wallet_id}">${results[i].meeting_number}</td>
+                <td id="lcall-${results[i].wallet_id}">${results[i].last_date ? `${results[i].last_date}` : "-"}</td>
+                <td id="hcall-${results[i].wallet_id}">${results[i].held_call_id ? `<a href="${"#Calls/" + results[i].held_call_id}">${results[i].held_call_name}</a>` : "-"}</td>
+                <td id="pcall-${results[i].wallet_id}">${results[i].planned_call_id ? `<a href="${"#Calls/" + results[i].planned_call_id}">${results[i].planned_call_name}</a>` : "-"}</td>
+                <td id="hmeeting-${results[i].wallet_id}">${results[i].held_meeting_id ? `<a href="${"#Meetings/" + results[i].held_meeting_id}">${results[i].held_meeting_name}</a>` : "-"}</td>
+                <td id="pmeeting-${results[i].wallet_id}">${results[i].planned_meeting_id ? `<a href="${"#Meetings/" + results[i].planned_meeting_id}">${results[i].planned_meeting_name}</a>` : "-"}</td>
+                <td id="mresult-${results[i].wallet_id}">${serializeCampaignResult(results[i].meet_res)}</td>
+                <td id="mdesc-${results[i].wallet_id}">${results[i].meet_desc ? `${results[i].meet_desc.length > 20 ? results[i].meet_desc.substring(0,20) + "..." : results[i].meet_desc }` : "-"} </td>
+                <td id="result-${results[i].wallet_id}">${serializeCampaignResult(results[i].wallet_result)}</td>
+                <td id="desc-${results[i].wallet_id}">${results[i].wallet_description ? `${results[i].wallet_description.length > 20 ? results[i].wallet_description.substring(0,20) + "..." : results[i].wallet_description }` : "-"} </td>
+                <td id="created-on-${results[i].wallet_id}">${results[i].created_on}</td>
+                <td><a href="javascript:void(0);" class="btn btn-primary" rel="tooltip" data-placement="bottom"
+                           title="" aria-label="Обаждане" role="button" data-original-title="Обаждане"
+                           data-module="Calls" data-walletid="${results[i].wallet_id}"  data-contactid="${results[i].accId}" data-campid="${campaignId}" data-accname="${results[i].accName}" data-campname="${campaignName}" data-layout="create" data-action="openDrawerCall">
+                           <span>
+                               Обаждане
+                           </span>
+                    </a></td>
+                <td><a href="javascript:void(0);" class="btn btn-primary" rel="tooltip" data-placement="bottom"
+                           title="" aria-label="Среща" role="button" data-original-title="Среща"
+                           data-module="Meetings" data-walletid="${results[i].wallet_id}"  data-contactid="${results[i].accId}" data-campid="${campaignId}" data-accname="${results[i].accName}" data-campname="${campaignName}" data-layout="create" data-action="openDrawerMeeting">
+                           <span>
+                               Среща
+                           </span>
+                    </a></td>
+                <td><a href="javascript:void(0);" class="btn btn-primary" rel="tooltip" data-placement="bottom"
+                           title="" aria-label="Резултат" role="button" data-original-title="Резултат"
+                           data-module="LD14_Wallets" data-id="${results[i].wallet_id}" data-layout="record" data-action="openDrawerWallet">
+                           <span>
+                               Резултат
+                           </span>
+                    </a></td>
+                <td> <a href="javascript:void(0);" class="btn" rel="tooltip" data-placement="bottom"
+                           title="" aria-label="Прегледай" role="button" data-original-title="Прегледай"
+                           data-module="Accounts" data-id="${results[i].accId}" data-action="previewRow">
+                            <i class="fa fa-eye" tabindex="-1"></i>
+                    </a>
+                </td>
+				<td> <a href="javascript:void(0);" class="btn" rel="tooltip" data-placement="bottom"
+                           title="" aria-label="Прегледай" role="button" data-original-title="Премахни контакт"
+                            data-contactid="${results[i].accId}"  
+							data-campaignid="${campaignId}" data-walletid="${results[i].wallet_id}"
+							data-action="removeContact">
+                            <i class="fa fa-minus"></i>
+                    </a>
+                </td>
+            </tr>
+           `);
+ 
+            }
+             App.alert.dismiss(LOADING_MESSAGE_ID);
+}
+function callApiAndGetResults(filters) {
+    var apiUrl;
+    if (filters) {
+        apiUrl = App.api.buildURL("Campaigns/get-wallets-accounts?OAuth-Token=" + App.api.getOAuthToken() + "&campaignId=" + campaignId + filters);
+    } else {
+        apiUrl = App.api.buildURL("Campaigns/get-wallets-accounts?OAuth-Token=" + App.api.getOAuthToken() + "&campaignId=" + campaignId);
+    }
+    App.api.call("get", apiUrl, {teams:payloadString}, {
+        success: function (result) {
+            results = [];
+             for (var i = 0; i < result.length; i++) {
+                results.push(result[i]);
+             }
+              App.alert.dismiss(LOADING_MESSAGE_ID);
+             drawHTMLtable();
+        },
+        error: function (data) {
+            App.alert.dismiss(LOADING_MESSAGE_ID);
+            alert("api error: " + JSON.stringify(data));
+        }
+    }, { async: false });
+}
+ 
+ 
